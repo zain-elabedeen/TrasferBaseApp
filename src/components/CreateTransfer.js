@@ -56,8 +56,16 @@ class CreateTransfer extends Component {
             placeholder="Transfer amount"
           />
         </div>
-        <Mutation mutation={CREATE_TRANSFER_MUTATION} variables={{ receiverAccountId, targetCurrency, amount }}>
-          {createTransferMutation => <button onClick={createTransferMutation}>Submit</button>}
+
+        <Mutation 
+          mutation={CREATE_TRANSFER_MUTATION} 
+          variables={{ receiverAccountId, targetCurrency, amount }}
+          onCompleted={() => this.props.history.push('/')}
+        >
+          {
+            createTransferMutation => 
+              <button onClick={createTransferMutation}>Create</button>
+          }
         </Mutation>
       </div>
     )
