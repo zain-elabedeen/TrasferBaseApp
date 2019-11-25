@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
+import { FormControl, Col} from 'react-bootstrap'
 
 const CREATE_TRANSFER_MUTATION = gql`
   mutation createTrasnfer(
@@ -29,31 +30,36 @@ class CreateTransfer extends Component {
     amount: 0
   }
 
+  handleChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+
   render() {
     const { receiverAccountId, targetCurrency, amount } = this.state
     return (
-      <div>
-        <div className="flex flex-column mt3">
-          <input
-            className="mb2"
-            value={receiverAccountId}
-            onChange={e => this.setState({ receiverAccountId: e.target.value })}
+      <Col xs={8} md={4}>
+        <div>
+          <h3>Create Transfer</h3>
+          <FormControl
+            name="receiverAccountId"
             type="text"
-            placeholder="Receiver account id"
+            value={this.state.value}
+            placeholder="Receiver Account"
+            onChange={this.handleChange.bind(this)}
           />
-          <input
-            className="mb2"
-            value={targetCurrency}
-            onChange={e => this.setState({ targetCurrency: e.target.value })}
+         <FormControl
+            name="targetCurrency"
             type="text"
+            value={this.state.value}
             placeholder="Target currency"
+            onChange={this.handleChange.bind(this)}
           />
-          <input
-            className="mb2"
-            value={amount}
-            onChange={e => this.setState({ amount: e.target.value })}
+          <FormControl
+            name="amount"
             type="number"
+            value={this.state.value}
             placeholder="Transfer amount"
+            onChange={this.handleChange.bind(this)}
           />
         </div>
 
@@ -67,7 +73,7 @@ class CreateTransfer extends Component {
               <button onClick={createTransferMutation}>Create</button>
           }
         </Mutation>
-      </div>
+      </Col>
     )
   }
 }
