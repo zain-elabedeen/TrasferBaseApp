@@ -8,39 +8,21 @@ class Header extends Component {
   render() {
     //TODO: Use JWT in request headers or coockies
     const authToken = localStorage.getItem(AUTH_TOKEN)
-
     return (
-      <div className="flex pa1 justify-between nowrap orange">
-        <div className="flex flex-fixed black">
-          <div className="fw7 mr1">Transactions</div>
-          <Link to="/" className="ml1 no-underline black">
-            Transactions
-          </Link>
-          {authToken && (
-            <div className="flex">
-              <div className="ml1">|</div>
-              <Link to="/create-transaction" className="ml1 no-underline black">
-                Create Transaction
-              </Link>
-            </div>
-          )}
-        </div>
-        <div className="flex flex-fixed">
+      <div>
+        <div className='pull-right'>
           {authToken ? (
             <div
-              className="ml1 pointer black"
               onClick={() => {
                 localStorage.removeItem(AUTH_TOKEN)
-                this.props.history.push(`/`)
+                this.props.history.push(`/login`)
               }}
             >
               Logout
             </div>
-          ) : (
-            <Link to="/login" className="ml1 no-underline black">
-              Login
-            </Link>
-          )}
+          ) : 
+            ''
+          }
         </div>
       </div>
     )
