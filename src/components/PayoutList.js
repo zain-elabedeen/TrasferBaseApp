@@ -34,7 +34,7 @@ class PayoutList extends Component {
         {({ loading, error, data }) => {
           if (loading) return <div>Fetching payouts</div>
           if (error) return <div>Error loading payouts</div>
-    
+
           const payoutsToRender = data.listPayouts
     
           return (
