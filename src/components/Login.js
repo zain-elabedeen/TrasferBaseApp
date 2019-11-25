@@ -62,7 +62,6 @@ class Login extends Component {
           />
           <FormControl
             name="password"
-            type="text"
             placeholder="Password"
             type="password"
             onChange={this.handleChange.bind(this)}
