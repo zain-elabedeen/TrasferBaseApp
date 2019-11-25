@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
+import { FormControl, Button, Col} from 'react-bootstrap'
 
 import { AUTH_TOKEN } from '../constants'
 
@@ -33,53 +34,59 @@ class Login extends Component {
     name: '',
   }
 
+  handleChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+
   render() {
     const { login, email, password, name } = this.state
     return (
-      <div>
-        <h4 className="mv3">{login ? 'Login' : 'Sign Up'}</h4>
+      <div className='Login'>
+        <h3>{login ? 'Login' : 'Sign Up'}</h3>
         <div className="flex flex-column">
           {!login && (
-            <input
-              value={name}
-              onChange={e => this.setState({ name: e.target.value })}
+             <FormControl
+              name="name"
               type="text"
+              value={this.state.value}
               placeholder="Name"
+              onChange={this.handleChange.bind(this)}
             />
           )}
-          <input
-            value={email}
-            onChange={e => this.setState({ email: e.target.value })}
+          <FormControl
+            name="email"
             type="text"
-            placeholder="Email address"
+            value={this.state.value}
+            placeholder="Email"
+            onChange={this.handleChange.bind(this)}
           />
-          <input
-            value={password}
-            onChange={e => this.setState({ password: e.target.value })}
-            type="password"
+          <FormControl
+            name="password"
+            type="text"
             placeholder="Password"
+            type="password"
+            onChange={this.handleChange.bind(this)}
           />
         </div>
-        <div className="flex mt3">
+        <div>
           <Mutation
             mutation={login ? LOGIN_MUTATION : SIGNUP_MUTATION}
             variables={{ email, password, name }}
             onCompleted={data => this._confirm(data)}
           >
             {mutation => (
-              <div className="pointer mr2 button" onClick={mutation}>
-                {login ? 'Login' : 'Create account'}
-              </div>
+              <Col xs={4} md={6}>
+                <Button onClick={mutation}>
+                  {login ? 'Login' : 'Create account'}
+                </Button>
+              </Col>
             )}
           </Mutation>
-          <div
-            className="pointer button"
-            onClick={() => this.setState({ login: !login })}
-          >
-            {login
-              ? 'Create new account'
-              : 'Login'}
-          </div>
+          <Col xs={4} md={6}>
+            <Button onClick={() => this.setState({ login: !login })} >
+              {login ? 'Create new account' : 'Login'}
+            </Button>
+          </Col>
         </div>
       </div>
     )
